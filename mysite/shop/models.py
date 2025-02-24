@@ -3,7 +3,11 @@ from django.db import models
 from django.db.models import ImageField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.core.validators import  MinValueValidator, MaxValueValidator
-from multiselectfield import MultiSelectField
+
+STATUS_CHOICES=(
+        ('pro',   'pro'),
+        ('simple',  'simple')
+    )
 
 
 class UserProfile(AbstractUser):
@@ -11,10 +15,7 @@ class UserProfile(AbstractUser):
     age = models.PositiveSmallIntegerField(validators=[
         MinValueValidator(16),   MaxValueValidator(100)
     ],null=True, blank=True)
-    STATUS_CHOICES=(
-        ('pro',   'pro'),
-        ('simple',  'simple')
-    )
+
     status= models.CharField(choices=STATUS_CHOICES,max_length=45, default='simple')
 
     def __str__(self):
@@ -66,16 +67,13 @@ class Movie(models.Model):
         ('720', '720'),
         ('1080', '1080')
     )
-    types =MultiSelectField(choices=TYPE_CHOICES, max_length=45,  max_choices=5)
+    types =models.CharField(choices=TYPE_CHOICES, max_length=45)
     movie_time = models.DateField()
     description = models.TextField(verbose_name='отисания_филма')
     movie_trailer = models.FileField(upload_to=' movies_trailer/')
     movie_image = models.ImageField(upload_to='movies_image/')
-    STATUS_MOVIE_CHOICES = (
-        ('pro', 'pro'),
-        ('simple', 'simple')
-    )
-    status_movie = models.CharField(choices=STATUS_MOVIE_CHOICES,max_length=45)
+
+    status_movie = models.CharField(choices=STATUS_CHOICES,max_length=45)
 
     def __str__(self):
         return f'{self.movie_name}'

@@ -150,7 +150,7 @@ class MovieListSerializers(serializers.ModelSerializer):
     get_avg_rating =serializers.SerializerMethodField()
     class Meta:
         model = Movie
-        fields = ['id','movie_name', 'movie_image', 'genre',  'get_avg_rating']
+        fields = ['id','status_movie','movie_name', 'movie_image', 'genre',  'get_avg_rating']
 
     def get_avg_rating(self,obj):
          return obj.get_avg_rating()
@@ -169,7 +169,7 @@ class MovieDataiSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ['movie_image', 'movie_trailer', 'description', 'movie_time',
+        fields = ['movie_image','status_movie', 'movie_trailer', 'description', 'movie_time',
                   'types', 'genre', 'actor', 'director', 'country', 'year',
                   'movie_name', 'movies_languages', 'moments_movie',
                   'rating_movie', 'get_avg_rating']

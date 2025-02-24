@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, generics, status
+from rest_framework import viewsets,  generics, status, permissions
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import *
 
@@ -7,7 +7,7 @@ from django_filters .rest_framework import DjangoFilterBackend
 from .filters import MovieFilter
 from rest_framework .filters import SearchFilter, OrderingFilter
 from rest_framework.response import Response
-
+from .permissions import CheckStatus
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = UserSerializer
@@ -51,12 +51,13 @@ class MovieAPIView(generics.ListAPIView):
     filterset_class = MovieFilter
     search_fields = ['movie_name']
     ordering_fields = ['year']
-    permission_classes = [permissions.IsAuthenticated]
 
 
 class MovieDataiAPIView(generics.RetrieveAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieDataiSerializers
+    permission_classes =  [CheckStatus]
+
 
 
 
