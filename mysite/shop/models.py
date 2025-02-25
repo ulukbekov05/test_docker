@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models import ImageField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.core.validators import  MinValueValidator, MaxValueValidator
-
+from multiselectfield import MultiSelectField
 STATUS_CHOICES=(
         ('pro',   'pro'),
         ('simple',  'simple')
@@ -67,7 +67,7 @@ class Movie(models.Model):
         ('720', '720'),
         ('1080', '1080')
     )
-    types =models.CharField(choices=TYPE_CHOICES, max_length=45)
+    types =MultiSelectField(choices=TYPE_CHOICES, max_length=45, max_choices=5)
     movie_time = models.DateField()
     description = models.TextField(verbose_name='отисания_филма')
     movie_trailer = models.FileField(upload_to=' movies_trailer/')
